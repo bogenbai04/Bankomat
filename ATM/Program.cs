@@ -51,6 +51,7 @@ wallet.ChangeNominal(3000);
 Console.WriteLine(wallet.Nominal);
 Bankomat currentBankomat;
 Account currentAccount;
+string typedPassword;
 while (true)
 {
     Console.WriteLine("Банкомат богдана");
@@ -76,6 +77,13 @@ while (true)
             currentAccount = accounts.SingleOrDefault(x => x.Login == account);
             if (currentAccount is not null)
             {
+                Console.WriteLine("Введите пароль");
+                typedPassword = Console.ReadLine();
+                if (currentAccount.Password != typedPassword)
+                {
+                    Console.WriteLine("Неверный пароль");
+                    break;
+                }
                 currentBankomat = bankomats.FirstOrDefault();
                 Console.WriteLine("Введите сумму для снятия");
                 var cash = Convert.ToInt32(Console.ReadLine());
@@ -108,6 +116,13 @@ while (true)
 
             if (currentAccount is not null)
             {
+                Console.WriteLine("Введите пароль");
+                typedPassword = Console.ReadLine();
+                if(currentAccount.Password != typedPassword)
+                {
+                    Console.WriteLine("Неверный пароль");
+                    break;
+                }
                 currentBankomat = bankomats.FirstOrDefault();
                 Console.WriteLine("Введите сумму для пополнения");
                 var cash = Convert.ToInt32(Console.ReadLine());
@@ -133,6 +148,13 @@ while (true)
             currentAccount = accounts.SingleOrDefault(x => x.Login == fromAccount);
             if(currentAccount is not null)
             {
+                Console.WriteLine("Введите пароль");
+                typedPassword = Console.ReadLine();
+                if (currentAccount.Password != typedPassword)
+                {
+                    Console.WriteLine("Неверный пароль");
+                    break;
+                }
                 Console.WriteLine("Выберите счёт для перевода");
                 var toAccount = Console.ReadLine();
                 var accountToTransfer = accounts.SingleOrDefault(x => x.Login == toAccount);
@@ -169,7 +191,16 @@ while (true)
             if (currentAccount is not null)
             {
                 Console.WriteLine("Узнать баланс");
-                Console.WriteLine($" Баланс равен {currentAccount.TotalCash}");
+                Console.WriteLine("Введите пароль"); 
+                 typedPassword = Console.ReadLine();
+                if (currentAccount.Password == typedPassword)
+                {
+                    Console.WriteLine($" Баланс равен {currentAccount.TotalCash}");
+                }
+                else
+                {
+                    Console.WriteLine("Неверный пароль");
+                }
             }
             else
             {
@@ -198,7 +229,7 @@ while (true)
             break;
         case 6:
             Console.WriteLine("Введите пароль");
-            var typedPassword = Console.ReadLine();
+            typedPassword = Console.ReadLine();
 
             while (GLOBAL_PASSWORD != typedPassword)
             {
